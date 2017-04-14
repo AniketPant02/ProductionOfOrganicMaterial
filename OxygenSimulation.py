@@ -8,6 +8,8 @@ Created on Thu Apr 13 23:06:42 2017
 # Needs: Molecule Amount Checker
 
 import math
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Assigning molecule amount to variable "moleculeAmount"
 moleculeAmount = int(input("Enter molecule amount here: "))
