@@ -21,28 +21,32 @@ cellAmount = int(input("Enter cell amount to be populated: "))
 # Assigning photon amount to variable "photonAmount"
 photonAmount = int(input("Enter photon amount: "))
 
-runCount = 1
+runCount = 0
 MonoOxygenCount = 0
 DiOxygenCount = 0
 TriOxygenCount = 0
+totalMoleculeAmount = 0
 
-while (runCount < 1000):
+while (moleculeAmount != totalMoleculeAmount):
     photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
-
     if (photonHitRate < 0.273):
         print("Hit O")
         runCount += 1
         MonoOxygenCount += 1
+        totalMoleculeAmount = int((MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3))
     elif (0.273 < photonHitRate < 0.841):
         print("Hit O2")
         runCount += 1
         DiOxygenCount += 1
+        totalMoleculeAmount = int((MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3))
     elif (0.841 < photonHitRate < 1.0):
         print("Hit O3")
         runCount += 1
         TriOxygenCount += 1
+        totalMoleculeAmount = int((MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3))
+print("Simulation Complete")
 
-MonoOxygenPercent = MonoOxygenCount/runCount
+MonoOxygenPercent = MonoOxygenCount/runCount # runCount or totalMoleculeCount/moleculeCount?
 DiOxygenPercent = DiOxygenCount/runCount
 TriOxygenPercent = TriOxygenCount/runCount
 
