@@ -20,7 +20,6 @@ cellAmount = int(input("Enter cell amount to be populated: "))
 
 # Assigning photon amount to variable "photonAmount"
 photonAmount = int(input("Enter photon amount: "))
-<<<<<<< Updated upstream
 
 runCount = 1
 MonoOxygenCount = 0
