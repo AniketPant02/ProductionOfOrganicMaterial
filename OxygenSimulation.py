@@ -16,18 +16,18 @@ import random
 moleculeAmount = int(input("Enter molecule amount here: "))
 
 # Assigning cell amount to variable "cellAmount"
-cellAmount = int(input("Enter cell amount to be populated: "))
+cellAmount = int(input("Enter cell amount to be populated: ")) # Not relevant as of now
 
 # Assigning photon amount to variable "photonAmount"
-photonAmount = int(input("Enter photon amount: "))
+photonAmount = int(input("Enter photon amount: ")) # Not relevant as of now
 
-runCount = 0
-MonoOxygenCount = 0
-DiOxygenCount = 0
-TriOxygenCount = 0
-totalMoleculeAmount = 0
+runCount = 0 # Iterates every simulation run
+MonoOxygenCount = 0 # Calculated every run
+DiOxygenCount = 0 # Calculated every run
+TriOxygenCount = 0 # Calculated every run
+totalMoleculeAmount = 0 # Iterates every simulation run
 
-while (moleculeAmount != totalMoleculeAmount):
+while (moleculeAmount != totalMoleculeAmount): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
     photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
     if (photonHitRate < 0.273):
         print("Hit O")
@@ -59,3 +59,5 @@ print("Following includes the Oxygen percent levels repective to molecule type")
 print(MonoOxygenPercent)
 print(DiOxygenPercent)
 print(TriOxygenPercent)
+
+print(int(totalMoleculeAmount))
