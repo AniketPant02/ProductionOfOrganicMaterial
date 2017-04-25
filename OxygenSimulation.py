@@ -33,22 +33,22 @@ while (moleculeAmount != totalMoleculeAmount): # Check if moleculeAmount == tota
         print("Hit O")
         runCount += 1
         MonoOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (MonoOxygenCount*1)
+        totalMoleculeAmount = totalMoleculeAmount + (1)
     elif (0.273 < photonHitRate < 0.841):
         print("Hit O2")
         runCount += 1
         DiOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (DiOxygenCount*2)
+        totalMoleculeAmount = totalMoleculeAmount + (2)
     elif (0.841 < photonHitRate < 1.0):
         print("Hit O3")
         runCount += 1
         TriOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (TriOxygenCount*3)
+        totalMoleculeAmount = totalMoleculeAmount + (3)
 print("Simulation Complete")
 
-MonoOxygenPercent = MonoOxygenCount/runCount # runCount or totalMoleculeCount/moleculeCount?
-DiOxygenPercent = DiOxygenCount/runCount
-TriOxygenPercent = TriOxygenCount/runCount
+MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeCount/moleculeCount?
+DiOxygenPercent = DiOxygenCount/totalMoleculeAmount
+TriOxygenPercent = TriOxygenCount/totalMoleculeAmount
 
 print("Following includes the Oxygen level counts per molecule type")
 print(MonoOxygenCount)
