@@ -6,6 +6,7 @@ Created on Thu Apr 13 23:06:42 2017
 """
 # Code must be able to return percentage abundance of O, O2, and O3 after recieving informaiton on cell numbers and molecule amount
 # Needs: Molecule Amount Checker
+# Issue: totalMoleculeAmount does not count molecule amount correctly. Generally, totalMoleculeAmount > moleculeAmount
 
 import math
 import numpy as np
@@ -33,20 +34,20 @@ while (moleculeAmount != totalMoleculeAmount): # Check if moleculeAmount == tota
         print("Hit O")
         runCount += 1
         MonoOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (1)
+        totalMoleculeAmount = totalMoleculeAmount + (1) # Adding one because one Oxygen molecule
     elif (0.273 < photonHitRate < 0.841):
         print("Hit O2")
         runCount += 1
         DiOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (2)
+        totalMoleculeAmount = totalMoleculeAmount + (2) # Adding one because two Oxygen molecules
     elif (0.841 < photonHitRate < 1.0):
         print("Hit O3")
         runCount += 1
         TriOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (3)
+        totalMoleculeAmount = totalMoleculeAmount + (3) # Adding one because three Oxygen molecules
 print("Simulation Complete")
 
-MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeCount/moleculeCount?
+MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeAmount/moleculeCount?
 DiOxygenPercent = DiOxygenCount/totalMoleculeAmount
 TriOxygenPercent = TriOxygenCount/totalMoleculeAmount
 
