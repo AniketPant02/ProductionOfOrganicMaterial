@@ -28,18 +28,25 @@ DiOxygenCount = 0 # Calculated every run
 TriOxygenCount = 0 # Calculated every run
 totalMoleculeAmount = 0 # Iterates every simulation run
 
+MonoOxygenProbability = 0.0 # Changed Recursively
+DiOxygenProbability = 1.0
+TriOxygenProbability = 0.0
+
+# Change values, total probability always equals one.
+
 while (moleculeAmount != totalMoleculeAmount): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
     photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
-    if (photonHitRate < 0.273):
+    if (photonHitRate < MonoOxygenProbability): #Less then OR Equal too
         print("Hit O")
         runCount += 1
         MonoOxygenCount += 1
         totalMoleculeAmount = totalMoleculeAmount + (1) # Adding one because one Oxygen molecule
-    elif (0.273 < photonHitRate < 0.841):
-        print("Hit O2")
+    elif (MonoOxygenProbability < photonHitRate < TriOxygenProbability): # Between intervals or equal to values
+        print("Hit O2") # May do nothing
+        # if # Hits something else
         runCount += 1
         DiOxygenCount += 1
-        totalMoleculeAmount = totalMoleculeAmount + (2) # Adding one because two Oxygen molecules
+        totalMoleculeAmount = totalMoleculeAmount + (2) # Adding one because two Oxygen molecules / Do NOT caluculate as of now. Run other test cases for O2 photo first!
     elif (0.841 < photonHitRate < 1.0):
         print("Hit O3")
         runCount += 1
