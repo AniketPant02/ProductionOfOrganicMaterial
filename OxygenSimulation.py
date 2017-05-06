@@ -62,11 +62,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netGainedMoleculeAmount = newMonoOxygenCount + newDiOxygenCount + newTriOxygenCount
                 runCount += 1
                 MonoOxygenProbability = newMonoOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-=======
                 if (oxygenCount == 0):
->>>>>>> origin/master
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
@@ -85,11 +81,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 MonoOxygenProbability = newMonoOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-=======
                 if (oxygenCount = 0):
->>>>>>> origin/master
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
@@ -109,11 +101,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 MonoOxygenProbability = newMonoOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-=======
                 if (oxygenCount = 0):
->>>>>>> origin/master
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
@@ -135,19 +123,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 DiOxygenProbability = newDiOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-                    pass
-                else:
-                    totalMoleculeAmount = oxygenCount + newGainedMoleculeAmount - netLostMoleculeAmount
-            elif (0.241 < diCaseRate <= 0.841):
-=======
                 if (oxygenCount = 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
-            if (0.241 < diCaseRate <= 0.841):
->>>>>>> origin/master
+            elif (0.241 < diCaseRate <= 0.841):
                 print("Photolysis Decomposition Reaction: O2 -> O + O")
                 MonoOxygenCount += 2
                 DiOxygenCount -= 1
@@ -163,19 +143,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 DiOxygenProbability = newDiOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-                    pass
-                else:
-                    totalMoleculeAmount = oxygenCount + newGainedMoleculeAmount - netLostMoleculeAmount
-            elif (0.841 <= diCaseRate <= 1.0):
-=======
                 if (oxygenCount = 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
-            if (0.841 <= diCaseRate <= 1.0):
->>>>>>> origin/master
+            elif (0.841 <= diCaseRate <= 1.0):
                 print("Synthesis Reaction: O3 -> O2 + O")
                 MonoOxygenCount += 1
                 DiOxygenCount -= 1
@@ -191,11 +163,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 DiOxygenProbability = newDiOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-=======
                 if (oxygenCount = 0):
->>>>>>> origin/master
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
@@ -217,11 +185,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 TriOxygenProbability = newTriOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-=======
                 if (oxygenCount = 0):
->>>>>>> origin/master
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
@@ -241,11 +205,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 TriOxygenProbability = newTriOxygenCount/totalMoleculeAmount
-<<<<<<< HEAD
-                if (oxygenCount < 0):
-=======
                 if (oxygenCount = 0):
->>>>>>> origin/master
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
