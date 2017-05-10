@@ -36,10 +36,10 @@ lostTriOxygenCount = 0
 MonoOxygenProbability = 0.0 # Changed Recursively
 DiOxygenProbability = 1.0 # 1.0 because all molecules are diatomic to begin with!
 TriOxygenProbability = 0.0
-
 # Change values, total probability always equals one.
+# Intervals are incorrect, fix interval selection method to be inclusive
 
-while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
+while ((MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability) == 1):
     while (moleculeAmount != totalMoleculeAmount): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
         photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
         # Starting O molecule possibilities. As of 3:06 A.M., 5/1/17, using all random number intervals for probability.
@@ -60,11 +60,12 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 netGainedMoleculeAmount = newMonoOxygenCount + newDiOxygenCount + newTriOxygenCount
                 runCount += 1
-                MonoOxygenProbability = newMonoOxygenCount/totalMoleculeAmount
                 if (oxygenCount == 0):
                     pass
                 else:
-                    totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                    totalMoleculeAmount += oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                MonoOxygenProbability += (newMonoOxygenCount - netLostMoleculeAmount)/totalMoleculeAmount
+                print(totalMoleculeAmount)
             elif (0.242 < monoCaseRate < 0.841):
                 print("Created O2 molecule (synthesis reaction: O + O -> O2)")
                 MonoOxygenCount -= 2
@@ -81,10 +82,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 MonoOxygenProbability = newMonoOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
             elif (0.842 < monoCaseRate < 1.0):
                 print("Created O3 molecule (synthesis reaction: O + O2 -> O3)")
                 MonoOxygenCount -= 1
@@ -101,10 +103,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 MonoOxygenProbability = newMonoOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
         elif (0.242 < photonHitRate <= 0.841): # Between intervals or equal to values
             diCaseRate = random.random()
             if (diCaseRate <= 0.241):
@@ -123,10 +126,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 DiOxygenProbability = newDiOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
             if (0.241 < diCaseRate <= 0.841):
                 print("Photolysis Decomposition Reaction: O2 -> O + O")
                 MonoOxygenCount += 2
@@ -143,10 +147,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 DiOxygenProbability = newDiOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
             if (0.841 <= diCaseRate <= 1.0):
                 print("Synthesis Reaction: O3 -> O2 + O")
                 MonoOxygenCount += 1
@@ -163,10 +168,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 DiOxygenProbability = newDiOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
         elif (0.842 < photonHitRate < 1.0):
             triCaseRate = random.random()
             if (triCaseRate <= 0.500):
@@ -185,10 +191,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 TriOxygenProbability = newTriOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
             elif (0.501 <= triCaseRate):
                 print("Photolysis Decomposition Reaction: O3 -> O2 + O")
                 MonoOxygenCount += 1
@@ -205,10 +212,11 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1):
                 netLostMoleculeAmount = lostMonoOxygenCount + lostDiOxygenCount + lostTriOxygenCount
                 runCount += 1
                 TriOxygenProbability = newTriOxygenCount/totalMoleculeAmount
-                if (oxygenCount = 0):
+                if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount = oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount
+                print(totalMoleculeAmount)
     print("Simulation Complete")
 
 MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeAmount/moleculeCount?
