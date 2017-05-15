@@ -1,20 +1,25 @@
-from numpy import exp,arange
-from pylab import meshgrid,cm,imshow,contour,clabel,colorbar,axis,title,show
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+import random
 
-# the function that I'm going to plot
-def z_func(x,y):
- return (1-(x**2+y**3))*exp(-(x**2+y**2)/2)
- 
-x = arange(-3.0,3.0,0.1)
-y = arange(-3.0,3.0,0.1)
-X,Y = meshgrid(x, y) # grid of point
-Z = z_func(X, Y) # evaluation of the function on the grid
+runCount = 0
+runCountGraph = []
+totalMoleculeAmount = 0
+totalMoleculeAmountGraph = []
 
-im = imshow(Z,cmap=cm.RdBu) # drawing the function
-# adding the Contour lines with labels
-cset = contour(Z,arange(-1,1.5,0.2),linewidths=2,cmap=cm.Set2)
-clabel(cset,inline=True,fmt='%1.1f',fontsize=10)
-colorbar(im) # adding the colobar on the right
-# latex fashion title
-title('$z=(1-x^2+y^3) e^{-(x^2+y^2)/2}$')
-show()
+while (runCount < 100):
+    runCount += 1
+    totalMoleculeAmount += 1
+    runCountGraph.append(runCount)
+    totalMoleculeAmountGraph.append(totalMoleculeAmount)
+
+print("Sim done")
+print(runCountGraph)
+print(totalMoleculeAmountGraph)
+
+plt.plot(totalMoleculeAmountGraph, runCountGraph)
+plt.xlabel('Total Molecule Amount')
+plt.ylabel('Simulation Run Count')
+plt.title('Total Molecule Amount as Time Progresses')
+plt.show

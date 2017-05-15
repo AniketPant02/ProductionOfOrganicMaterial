@@ -1,0 +1,35 @@
+Simulation Results as of 5/12/17
+
+Following includes the Oxygen level counts per molecule type
+8082
+3857
+-1932
+Following includes the Oxygen percent levels repective to molecule type
+0.8082
+0.3857
+-0.1932
+10000
+14172
+Following includes the Oxygen level counts per molecule type
+7901
+3955
+-1937
+Following includes the Oxygen percent levels repective to molecule type
+0.7901
+0.3955
+-0.1937
+Following includes the totalMoleculeAmount and runCount
+10000
+14145
+
+Following includes the Oxygen level counts per molecule type
+16209
+7750
+-3903
+Following includes the Oxygen percent levels repective to molecule type
+0.81045
+0.3875
+-0.19515
+Following includes the totalMoleculeAmount and runCount
+20000
+28831
