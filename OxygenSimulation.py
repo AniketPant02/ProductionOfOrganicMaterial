@@ -47,7 +47,7 @@ totalMoleculeAmountGraph = []
 runCountGraph = []
 
 while ((MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability) == 1):
-    while (totalMoleculeAmount != moleculeAmount): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
+    while (totalMoleculeAmount != moleculeAmount) and (totalMoleculeAmount <= moleculeAmount*2): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
         photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
         # Starting O molecule possibilities. As of 3:06 A.M., 5/1/17, using all random number intervals for probability.
         if (photonHitRate <= 0.241): #Less then OR Equal too
@@ -238,7 +238,7 @@ while ((MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability) == 1
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
-    print("Simulation Complete")
+print("Simulation Complete")
 
 MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeAmount/moleculeCount?
 DiOxygenPercent = DiOxygenCount/totalMoleculeAmount
