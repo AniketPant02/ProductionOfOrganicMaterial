@@ -9,7 +9,7 @@ totalMoleculeAmount = 0
 totalMoleculeAmountGraph = []
 
 while (runCount < 100):
-    runCount += 1
+    runCount += 2
     totalMoleculeAmount += 1
     runCountGraph.append(runCount)
     totalMoleculeAmountGraph.append(totalMoleculeAmount)

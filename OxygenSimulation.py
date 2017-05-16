@@ -52,7 +52,6 @@ while ((MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability) == 1
         # Starting O molecule possibilities. As of 3:06 A.M., 5/1/17, using all random number intervals for probability.
         if (photonHitRate <= 0.241): #Less then OR Equal too
             monoCaseRate = random.random()
-            if (monoCaseRate <= 0.241):
                 print("Hit Nothing")
                 MonoOxygenCount += 0
                 DiOxygenCount += 0
@@ -255,8 +254,8 @@ print(MonoOxygenPercent)
 print(DiOxygenPercent)
 print(TriOxygenPercent)
 print("Following includes the totalMoleculeAmount and runCount")
-print(int(totalMoleculeAmount))
-print(int(runCount))
+print((totalMoleculeAmount))
+print(runCount)
 print(MonoOxygenCount + DiOxygenCount + TriOxygenCount)
 
 
