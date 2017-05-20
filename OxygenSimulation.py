@@ -7,6 +7,7 @@ Created on Thu Apr 13 23:06:42 2017
 # Code must be able to return percentage abundance of O, O2, and O3 after recieving informaiton on cell numbers and molecule amount
 # Needs: Molecule Amount Checker
 # Issue: totalMoleculeAmount does not count molecule amount correctly. Generally, totalMoleculeAmount > moleculeAmount
+# Need to recursively generate probabilities. 
 
 import math
 import numpy as np
@@ -46,8 +47,8 @@ TriOxygenProbability = 0.0
 totalMoleculeAmountGraph = []
 runCountGraph = []
 
-while ((MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability) == 1):
-    while (totalMoleculeAmount != moleculeAmount): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
+while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0):
+    while (totalMoleculeAmount != moleculeAmount*2): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
         photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
         # Starting O molecule possibilities. As of 3:06 A.M., 5/1/17, using all random number intervals for probability.
         if (photonHitRate <= 0.241): #Less then OR Equal too
@@ -255,11 +256,13 @@ while ((MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability) == 1
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
-print("Simulation Complete")
+    print("Simulation Complete")
 
 MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeAmount/moleculeCount?
 DiOxygenPercent = DiOxygenCount/totalMoleculeAmount
 TriOxygenPercent = TriOxygenCount/totalMoleculeAmount
+
+# To Do: Make code open a new command prompt window to print results in a more readable format.
 
 print("Following includes the Oxygen level counts per molecule type")
 print(MonoOxygenCount)
