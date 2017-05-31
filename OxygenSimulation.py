@@ -7,7 +7,7 @@ Created on Thu Apr 13 23:06:42 2017
 # Code must be able to return percentage abundance of O, O2, and O3 after recieving informaiton on cell numbers and molecule amount
 # Needs: Molecule Amount Checker
 # Issue: totalMoleculeAmount does not count molecule amount correctly. Generally, totalMoleculeAmount > moleculeAmount
-# Need to recursively generate probabilities. 
+# Need to recursively generate probabilities.
 
 import math
 import numpy as np
@@ -180,7 +180,7 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
             elif (0.841 < diCaseRate <= 1.0):
-                print("Synthesis Reaction: O3 -> O2 + O")
+                print("Decomposition Reaction: O3 -> O2 + O")
                 MonoOxygenCount += 1
                 DiOxygenCount -= 1
                 TriOxygenCount -= 1
