@@ -14,14 +14,37 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-# Assigning molecule amount to variable "moleculeAmount"
-moleculeAmount = int(input("Enter diatomic oxygen molecule amount here: ")) # moleculeAmount divided by two because we begin with all DiAtomic Oxygen molecules, but we want to count monoAtomic because it is easier to keep track off.
+'''
+Needed variables and constraints + why:
+moleculeAmount is used to set a starting molecule amount (initial amount found in space)
+totalMoleculeAmount is used to make sure molecule affected by simulation does not go above moleculeAmount (Conservation Of Mass)
+Each molecule has to be counted individually:
+    MonoOxygen values:
+        MonoOxygenCount counts the number of MonoAtomic Oxygen Molecules
+        MonoOxygenProbability repesents the probability of a MonoAtomic Atom being Hit in the ice grain.
+        monoCaseRate is the random float that assigns random probability for each MonoAtomic specific reaction
+    DiOyxgen values:
+        DiOxygenCount counts the number of DiAtomic Oxygen Molecules
+        DiOxygenProbability represents the probability of a DiAtomic atom being hit in the ice grain.
+        diCaseRate is the random float that assigns random probability for each DiAtomic specific reaction
+    TriOxygen values:
+        TriOxygenCount counts the number of TriAtomic Oxygen Molecules
+        TriOxygenProbability represents the probability of a TriAtomic Molecule being hit in the ice grain.
+        triCaseRate is the random float that assigns random probability for each TriAtomic specific reaction.
+    Global values:
+        totalMoleculeAmount counts the total Molecule amounts (Mono + Di + Tri counts). Strictly an (int) value and is always less or equal to the previously assigned moleculeAmount. Cannot be negative
+        TotalProbability = 1.0. Should always equal 1
+        runCount counts the numbers of runs to provide timeline for graph.
+'''
+
+# Assigning molecule amount to variable "moleculeAmount". Amount already set. 10,000 O2 Molecules
+moleculeAmount = 10000 # moleculeAmount divided by two because we begin with all DiAtomic Oxygen molecules, but we want to count monoAtomic because it is easier to keep track off.
 
 # Assigning cell amount to variable "cellAmount"
-cellAmount = int(input("Enter cell amount to be populated: ")) # Not relevant as of now
+# cellAmount = int(input("Enter cell amount to be populated: ")) # Not relevant as of now
 
 # Assigning photon amount to variable "photonAmount"
-photonAmount = int(input("Enter photon amount: ")) # Not relevant as of now
+# photonAmount = int(input("Enter photon amount: ")) # Not relevant as of now
 
 totalMoleculeAmountGraph = []
 runCountGraph = []
@@ -41,40 +64,41 @@ lostTriOxygenCount = 0
 MonoOxygenProbability = 0.0 # Changed Recursively
 DiOxygenProbability = 1.0 # 1.0 because all molecules are diatomic to begin with!
 TriOxygenProbability = 0.0
+TotalPercent = MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability
 # Change values, total probability always equals one.
 # Intervals are incorrect, fix interval selection method to be inclusive
 
 totalMoleculeAmountGraph = []
 runCountGraph = []
 
-while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0):
-    while (totalMoleculeAmount != moleculeAmount*2): # Check if moleculeAmount == totalMoleculeAmount, if so, stop simulation, as we have run out of oxygen molecules to test
+while (TotalPercent == 1.0):
+    while ((MonoOxygenProbability > 0.0) and (DiOxygenProbability > 0.0) and (TriOxygenProbability > 0.0)):
         photonHitRate = random.random() # photonHitRate decides which test-case is to be selected for simulation evaluation
         # Starting O molecule possibilities. As of 3:06 A.M., 5/1/17, using all random number intervals for probability.
         if (photonHitRate <= 0.241): #Less then OR Equal too
             monoCaseRate = random.random()
             if (0.0 <= monoCaseRate <= 0.241):
-                print("Hit Nothing")
+                print("Hit Nothing [1]")
                 MonoOxygenCount += 0
                 DiOxygenCount += 0
                 TriOxygenCount += 0
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 0
                 newDiOxygenCount = 0
                 newTriOxygenCount = 0
                 lostMonoOxygenCount = 0
                 lostDiOxygenCount = 0
                 lostTriOxygenCount = 0
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
@@ -83,22 +107,22 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0
                 MonoOxygenCount -= 2
                 DiOxygenCount += 1
                 TriOxygenCount += 0
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 0
                 newDiOxygenCount = 1
                 newTriOxygenCount = 0
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 2
                 lostDiOxygenCount = 0
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
@@ -107,50 +131,50 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0
                 MonoOxygenCount -= 1
                 DiOxygenCount -= 1
                 TriOxygenCount += 1
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 0
                 newDiOxygenCount = 0
                 newTriOxygenCount = 1
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 1
                 lostDiOxygenCount = 1
                 lostTriOxygenCount = 0
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
         elif (0.241 < photonHitRate <= 0.841): # Between intervals or equal to values
             diCaseRate = random.random()
             if (diCaseRate <= 0.241):
-                print("Hit Nothing")
+                print("Hit Nothing [2]")
                 MonoOxygenCount += 0
                 DiOxygenCount += 0
                 TriOxygenCount += 0
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 0
                 newDiOxygenCount = 0
                 newTriOxygenCount = 0
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 0
                 lostDiOxygenCount = 0
                 lostTriOxygenCount = 0
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
@@ -159,23 +183,23 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0
                 MonoOxygenCount += 2
                 DiOxygenCount -= 1
                 TriOxygenCount += 0
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 2
                 newDiOxygenCount = 0
                 newTriOxygenCount = 0
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 0
                 lostDiOxygenCount = 1
                 lostTriOxygenCount = 0
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
@@ -184,50 +208,50 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0
                 MonoOxygenCount += 1
                 DiOxygenCount -= 1
                 TriOxygenCount -= 1
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 1
                 newDiOxygenCount = 1
                 newTriOxygenCount = 0
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 0
                 lostDiOxygenCount = 0
                 lostTriOxygenCount = 1
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
         elif (0.841 < photonHitRate <= 1.0):
             triCaseRate = random.random()
             if (triCaseRate <= 0.500):
-                print("Hit Nothing")
+                print("Hit Nothing [3]")
                 MonoOxygenCount += 0
                 DiOxygenCount += 0
                 TriOxygenCount += 0
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 0
                 newDiOxygenCount = 0
                 newTriOxygenCount = 0
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 0
                 lostDiOxygenCount = 0
                 lostTriOxygenCount = 0
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
@@ -236,27 +260,27 @@ while (MonoOxygenProbability + DiOxygenProbability + TriOxygenProbability == 1.0
                 MonoOxygenCount += 1
                 DiOxygenCount -= 1
                 TriOxygenCount -= 1
-                oxygenCount = (MonoOxygenCount*1) + (DiOxygenCount*2) + (TriOxygenCount*3)
+                oxygenCount = (MonoOxygenCount) + (DiOxygenCount) + (TriOxygenCount)
                 newMonoOxygenCount = 1
                 newDiOxygenCount = 1
                 newTriOxygenCount = 0
-                netGainedMoleculeAmount = (newMonoOxygenCount*1) + (newDiOxygenCount*2) + (newTriOxygenCount*3)
+                netGainedMoleculeAmount = (newMonoOxygenCount) + (newDiOxygenCount) + (newTriOxygenCount)
                 lostMonoOxygenCount = 0
                 lostDiOxygenCount = 0
                 lostTriOxygenCount = 1
-                netLostMoleculeAmount = (lostMonoOxygenCount*1) + (lostDiOxygenCount*2) + (lostTriOxygenCount*3)
+                netLostMoleculeAmount = (lostMonoOxygenCount) + (lostDiOxygenCount) + (lostTriOxygenCount)
                 runCount += 1
                 if (oxygenCount == 0):
                     pass
                 else:
                     totalMoleculeAmount += (oxygenCount + netGainedMoleculeAmount - netLostMoleculeAmount)
-                MonoOxygenProbability += ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
-                DiOxygenProbability += ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
-                TriOxygenProbability += ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
+                MonoOxygenProbability = ((MonoOxygenCount + newMonoOxygenCount - lostMonoOxygenCount)/totalMoleculeAmount)
+                DiOxygenProbability = ((DiOxygenCount + newDiOxygenCount - lostDiOxygenCount)/totalMoleculeAmount)
+                TriOxygenProbability = ((TriOxygenCount + newTriOxygenCount - lostTriOxygenCount)/totalMoleculeAmount)
                 print(totalMoleculeAmount)
                 totalMoleculeAmountGraph.append(totalMoleculeAmount)
                 runCountGraph.append(runCount)
-    print("Simulation Complete")
+print("Simulation Complete")
 
 MonoOxygenPercent = MonoOxygenCount/totalMoleculeAmount # runCount or totalMoleculeAmount/moleculeCount?
 DiOxygenPercent = DiOxygenCount/totalMoleculeAmount
