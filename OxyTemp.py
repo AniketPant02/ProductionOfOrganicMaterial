@@ -142,9 +142,13 @@ print("Array: Run Count Values")
 print(runCountGraph)
 
 # Setting the domain of graph values
-MonoAtomicDomain = int(MonoOxygenCount)
-DiAtomicDomain = int(DiOxygenCount)
-TriAtomicDomain = int(TriOxygenCount)
+MonoAtomicDomainMax = int(MonoOxygenCount)
+DiAtomicDomainMax = int(DiOxygenCount)
+TriAtomicDomainMax = int(TriOxygenCount)
+
+MonoAtomicDomainIntervals = np.linspace(0.0, )
+DiAtomicDomainIntervals = np.linspace()
+TriAtomicDomainIntervals = np.linspace()
 
 '''
 # Plotting Values/ matplotlib
