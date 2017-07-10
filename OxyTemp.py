@@ -133,6 +133,11 @@ while (runCount < 1000):
             TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
             runCountGraph = np.append(runCountGraph,runCount)
         print("O3 Cases")
+        # Final value needs to be appended to array
+        MonoOxygenCountGraph = np.append(MonoOxygenCountGraph, MonoOxygenCount)
+        DiOxygenCountGraph = np.append(DiOxygenCountGraph, DiOxygenCount)
+        TriOxygenCountGraph = np.append(TriOxygenCountGraph, TriOxygenCount)
+        runCountGraph = np.append(runCountGraph, runCount)
 '''
         DiOxygenCount = (moleculeAmount*2 - ((MonoOxygenCount) + (TriOxygenCount*3)))/2
         MonoOxygenCount = moleculeAmount*2 - ((DiOxygenCount) + (TriOxygenCount*3))
