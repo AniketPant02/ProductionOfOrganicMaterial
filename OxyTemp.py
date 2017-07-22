@@ -64,7 +64,7 @@ runCountGraph = np.array([])
 # Set only for first run of simulation. This is because all molecules are originally zero except DiAtomic.
 while (runCount < 0):
     MonoOxygenCount = 0
-    DiOxygenCount = moleculeAmount*2
+    DiOxygenCount = moleculeAmount
     TriOxygenCount = 0
 
 # Simulation speific code
@@ -198,7 +198,7 @@ print(TriOxygenCountGraph)
 print("Array: Run Count Values")
 print(runCountGraph)
 
-# molecularVariance = pd.DataFrame({'Run Count':runCountGraph, 'MonoOxygenCount':MonoOxygenCountGraph}).set_index('Run Count').to_csv('molecularVariance.csv')
+#v molecularVariance = pd.DataFrame({'Run Count':runCountGraph, 'MonoOxygenCount':MonoOxygenCountGraph}).set_index('Run Count').to_csv('molecularVariance.csv')
 
 # Matplotlib version of MonoOxy Graph
 plt.plot(runCountGraph, MonoOxygenCountGraph, 'b-')
