@@ -10,6 +10,7 @@ Needs: Molecule Amount Checker
 Issue: totalMoleculeAmount does not count molecule amount correctly. Generally, totalMoleculeAmount > moleculeAmount
 Need to recursively generate probabilities.
 Issue: Division by Zero. Some cases lead to division by zero in totalMoleculeAmount.
+runCount needs to be corrected, as does totalMoleculeAmount and probabilities.
 '''
 
 # Importing Libraries. Random for initial probability assignment, matplotlib for graphing functionality.
@@ -39,12 +40,14 @@ Each molecule has to be counted individually:
     Global values:
         totalMoleculeAmount counts the total Molecule amounts (Mono + Di + Tri counts). Strictly an (int) value and is always less or equal to the previously assigned moleculeAmount. Cannot be negative
         TotalProbability = 1.0. Should always equal 1
-        runCount counts the numbers of runs to provide timeline for graph.
+        runCount counts the numbers of runs to provide timeline for graph. ("photons" from star)
         photonHitRate is a random float that assigns probability for each oxygen case.
 '''
 
 # ADD DO NOTHING!!!
 # Instead of using If-else statements, try arrays and loops to iterate through sims
+# runCount isn't counting values correctly, appending error
+# totalMoleculeAmount counter is not working and is constantly stuck at zero.
 
 
 runCount = 0
@@ -71,7 +74,8 @@ while (runCount < 0):
 while (runCount) < 10000:
     photonHitRate = random.random()
     runCount += 1
-    if (0.241 <= photonHitRate < 0.841):
+    print(runCount)
+    if (MonoOxygenCount/totalMoleculeAmount <= photonHitRate < DiOxygenCount/totalMoleculeAmount):
         monoCaseRate = random.random()
         if (monoCaseRate <= 0.241):
             print("Hit Nothing [Mono Case]")
@@ -106,7 +110,7 @@ while (runCount) < 10000:
             totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
             runCountGraph = np.append(runCountGraph, runCount)
         print("MonoOxygen Cases")
-    elif (0.241 < photonHitRate <= 0.841):
+    elif (DiOxygenCount/totalMoleculeAmount < photonHitRate <= TriOxygenCount/totalMoleculeAmount):
         diCaseRate = random.random()
         if (diCaseRate <= 0.241):
             print("Hit Nothing [Di Case]")
@@ -141,7 +145,7 @@ while (runCount) < 10000:
             totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
             runCountGraph = np.append(runCountGraph, runCount)
         print("DiOxygen Cases")
-    elif (0.841 < photonHitRate <= 1.0):
+    elif (TriOxygenCount/totalMoleculeAmount < photonHitRate <= 1.0):
         triCaseRate = random.random()
         if (triCaseRate <= 0.5):
             print("Hit Nothing [TriOxygen]")
