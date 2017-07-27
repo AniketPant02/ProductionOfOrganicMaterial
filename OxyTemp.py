@@ -48,14 +48,14 @@ Each molecule has to be counted individually:
 # Instead of using If-else statements, try arrays and loops to iterate through sims
 # runCount isn't counting values correctly, appending error
 # totalMoleculeAmount counter is not working and is constantly stuck at zero.
-
+# totalMoleculeAmount is always set back to zero
 
 runCount = 0
 moleculeAmount = 10000
 MonoOxygenCount = 0
-DiOxygenCount = 0
+DiOxygenCount = 10000
 TriOxygenCount = 0
-totalMoleculeAmount = 0
+totalMoleculeAmount = 20000
 
 # Defining of Graph variables. Append values using "arrayName = np.append(arrayName, value)". Graph using matplotlib.
 MonoOxygenCountGraph = np.array([])
@@ -67,17 +67,17 @@ runCountGraph = np.array([])
 # Set only for first run of simulation. This is because all molecules are originally zero except DiAtomic.
 while (runCount < 0):
     MonoOxygenCount = 0
-    DiOxygenCount = moleculeAmount
+    DiOxygenCount = moleculeAmount*2
     TriOxygenCount = 0
 
 # Simulation speific code
-while (runCount) < 10000:
+while (runCount) < 1000000:
     photonHitRate = random.random()
     runCount += 1
     print(runCount)
     if (MonoOxygenCount/totalMoleculeAmount <= photonHitRate < DiOxygenCount/totalMoleculeAmount):
         monoCaseRate = random.random()
-        if (monoCaseRate <= 0.241):
+        if (monoCaseRate <= 0.241): #probabilities need to be set
             print("Hit Nothing [Mono Case]")
             MonoOxygenCount += 0
             DiOxygenCount += 0
@@ -171,12 +171,12 @@ while (runCount) < 10000:
             runCountGraph = np.append(runCountGraph, runCount)
         print("O3 Cases")
         # Final value needs to be appended to array
-        '''
+'''
     MonoOxygenCountGraph = np.append(MonoOxygenCountGraph, MonoOxygenCount)
     DiOxygenCountGraph = np.append(DiOxygenCountGraph, DiOxygenCount)
     TriOxygenCountGraph = np.append(TriOxygenCountGraph, TriOxygenCount)
     runCountGraph = np.append(runCountGraph, runCount)
-    '''
+'''
 '''
         DiOxygenCount = (moleculeAmount*2 - ((MonoOxygenCount) + (TriOxygenCount*3)))/2
         MonoOxygenCount = moleculeAmount*2 - ((DiOxygenCount) + (TriOxygenCount*3))
@@ -225,3 +225,9 @@ plt.ylabel("TriOxygen Levels")
 plt.xlabel("Number of Simulation Runs")
 plt.show()
 # plt.savefig('TriOxyCount.png')
+# Matplotlib version of TotalOxy Graph
+plt.plot(runCountGraph, totalMoleculeAmountGraph, 'p-')
+plt.title("Flucuations of Oxygen")
+plt.ylabel("Oxygen Level")
+plt.xlabel("Number of Simulation Runs")
+plt.show()
