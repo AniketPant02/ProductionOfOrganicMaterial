@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from datetime import datetime
+startTime = datetime.now()
 
 '''
 Needed variables and constraints + why:
@@ -71,117 +73,118 @@ while (runCount < 0):
     TriOxygenCount = 0
 
 # Simulation speific code
-while (runCount) < 1000000:
-    photonHitRate = random.random()
-    runCount += 1
-    print(runCount)
-    if (MonoOxygenCount/totalMoleculeAmount <= photonHitRate < DiOxygenCount/totalMoleculeAmount):
-        monoCaseRate = random.random()
-        if (monoCaseRate <= 0.241): #probabilities need to be set
-            print("Hit Nothing [Mono Case]")
-            MonoOxygenCount += 0
-            DiOxygenCount += 0
-            TriOxygenCount += 0
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        elif (0.241 < monoCaseRate <= 0.841):
-            print("Created O2 Molecule [Synthesis Reaction: O + O -> O2]")
-            MonoOxygenCount -= 2
-            DiOxygenCount += 1
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        elif (0.841 < monoCaseRate <= 1.0):
-            print("Created O3 Molecule [Synthesis Reaction: O + O2 -> O3]")
-            MonoOxygenCount -= 1
-            DiOxygenCount -= 1
-            TriOxygenCount += 1
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        print("MonoOxygen Cases")
-    elif (DiOxygenCount/totalMoleculeAmount < photonHitRate <= TriOxygenCount/totalMoleculeAmount):
-        diCaseRate = random.random()
-        if (diCaseRate <= 0.241):
-            print("Hit Nothing [Di Case]")
-            DiOxygenCount += 0
-            MonoOxygenCount += 0
-            TriOxygenCount += 0
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        elif (0.241 < diCaseRate <= 0.841):
-            print("Photolysis Decomp: O2 -> O + O")
-            DiOxygenCount -= 1
-            MonoOxygenCount += 2
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        elif (0.841 < diCaseRate <= 1.0):
-            print("Decomp: O3 -> O2 + O [DiOxygen Case]")
-            DiOxygenCount += 1
-            MonoOxygenCount += 1
-            TriOxygenCount -= 1
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        print("DiOxygen Cases")
-    elif (TriOxygenCount/totalMoleculeAmount < photonHitRate <= 1.0):
-        triCaseRate = random.random()
-        if (triCaseRate <= 0.5):
-            print("Hit Nothing [TriOxygen]")
-            TriOxygenCount += 0
-            MonoOxygenCount += 0
-            DiOxygenCount += 0
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        elif (triCaseRate > 0.5):
-            print("Photolysis Decomp Reaction: O3 -> O2 + O")
-            TriOxygenCount -= 1
-            MonoOxygenCount += 1
-            DiOxygenCount += 1
-            totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
-            TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
-            MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
-            DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
-            totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
-            runCountGraph = np.append(runCountGraph, runCount)
-        print("O3 Cases")
-        # Final value needs to be appended to array
-'''
-    MonoOxygenCountGraph = np.append(MonoOxygenCountGraph, MonoOxygenCount)
-    DiOxygenCountGraph = np.append(DiOxygenCountGraph, DiOxygenCount)
-    TriOxygenCountGraph = np.append(TriOxygenCountGraph, TriOxygenCount)
-    runCountGraph = np.append(runCountGraph, runCount)
-'''
-'''
-        DiOxygenCount = (moleculeAmount*2 - ((MonoOxygenCount) + (TriOxygenCount*3)))/2
-        MonoOxygenCount = moleculeAmount*2 - ((DiOxygenCount) + (TriOxygenCount*3))
-        TriOxygenCount = moleculeAmount*2 - ((DiOxygenCount*2) + MonoOxygenCount)
-'''
+while ((MonoOxygenCount) + (DiOxygenCount*2) + (TriOxygenCount*3) > totalMoleculeAmount):
+    while (runCount) < 10000:
+        photonHitRate = random.random()
+        runCount += 1
+        print(runCount)
+        if (MonoOxygenCount/totalMoleculeAmount <= photonHitRate < DiOxygenCount/totalMoleculeAmount):
+            monoCaseRate = random.random()
+            if (monoCaseRate <= 0.241): #probabilities need to be set
+                print("Hit Nothing [Mono Case]")
+                MonoOxygenCount += 0
+                DiOxygenCount += 0
+                TriOxygenCount += 0
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            elif (0.241 < monoCaseRate <= 0.841):
+                print("Created O2 Molecule [Synthesis Reaction: O + O -> O2]")
+                MonoOxygenCount -= 2
+                DiOxygenCount += 1
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            elif (0.841 < monoCaseRate <= 1.0):
+                print("Created O3 Molecule [Synthesis Reaction: O + O2 -> O3]")
+                MonoOxygenCount -= 1
+                DiOxygenCount -= 1
+                TriOxygenCount += 1
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            print("MonoOxygen Cases")
+        elif (DiOxygenCount/totalMoleculeAmount < photonHitRate <= TriOxygenCount/totalMoleculeAmount):
+            diCaseRate = random.random()
+            if (diCaseRate <= 0.241):
+                print("Hit Nothing [Di Case]")
+                DiOxygenCount += 0
+                MonoOxygenCount += 0
+                TriOxygenCount += 0
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            elif (0.241 < diCaseRate <= 0.841):
+                print("Photolysis Decomp: O2 -> O + O")
+                DiOxygenCount -= 1
+                MonoOxygenCount += 2
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            elif (0.841 < diCaseRate <= 1.0):
+                print("Decomp: O3 -> O2 + O [DiOxygen Case]")
+                DiOxygenCount += 1
+                MonoOxygenCount += 1
+                TriOxygenCount -= 1
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            print("DiOxygen Cases")
+        elif (TriOxygenCount/totalMoleculeAmount < photonHitRate <= 1.0):
+            triCaseRate = random.random()
+            if (triCaseRate <= 0.5):
+                print("Hit Nothing [TriOxygen]")
+                TriOxygenCount += 0
+                MonoOxygenCount += 0
+                DiOxygenCount += 0
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            elif (triCaseRate > 0.5):
+                print("Photolysis Decomp Reaction: O3 -> O2 + O")
+                TriOxygenCount -= 1
+                MonoOxygenCount += 1
+                DiOxygenCount += 1
+                totalMoleculeAmount = MonoOxygenCount + (DiOxygenCount*2) + (3*TriOxygenCount)
+                TriOxygenCountGraph = np.append(TriOxygenCountGraph,TriOxygenCount)
+                MonoOxygenCountGraph = np.append(MonoOxygenCountGraph,MonoOxygenCount)
+                DiOxygenCountGraph = np.append(DiOxygenCountGraph,DiOxygenCount)
+                totalMoleculeAmountGraph = np.append(totalMoleculeAmountGraph, totalMoleculeAmount)
+                runCountGraph = np.append(runCountGraph, runCount)
+            print("O3 Cases")
+            # Final value needs to be appended to array
+    '''
+        MonoOxygenCountGraph = np.append(MonoOxygenCountGraph, MonoOxygenCount)
+        DiOxygenCountGraph = np.append(DiOxygenCountGraph, DiOxygenCount)
+        TriOxygenCountGraph = np.append(TriOxygenCountGraph, TriOxygenCount)
+        runCountGraph = np.append(runCountGraph, runCount)
+    '''
+    '''
+            DiOxygenCount = (moleculeAmount*2 - ((MonoOxygenCount) + (TriOxygenCount*3)))/2
+            MonoOxygenCount = moleculeAmount*2 - ((DiOxygenCount) + (TriOxygenCount*3))
+            TriOxygenCount = moleculeAmount*2 - ((DiOxygenCount*2) + MonoOxygenCount)
+    '''
 print("Simulation Finished")
 
 # Printing Values
@@ -226,8 +229,11 @@ plt.xlabel("Number of Simulation Runs")
 plt.show()
 # plt.savefig('TriOxyCount.png')
 # Matplotlib version of TotalOxy Graph
-plt.plot(runCountGraph, totalMoleculeAmountGraph, 'p-')
+plt.plot(runCountGraph, totalMoleculeAmountGraph, 'm--')
 plt.title("Flucuations of Oxygen")
 plt.ylabel("Oxygen Level")
 plt.xlabel("Number of Simulation Runs")
 plt.show()
+
+
+print(datetime.now()-startTime)
